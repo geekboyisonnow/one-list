@@ -39,10 +39,39 @@ class App extends Component {
   //   console.log(this.state.newItemText)
   // }
 
-  crossedText = event => {
-    this.setState({
-      complete: true
-    })
+  complete = event => {
+    axios
+      .put(
+        `https://one-list-api.herokuapp.com/items/${
+          event.target.dataset.id
+        }?access_token=fingerlicknfilms`,
+        {
+          item: {
+            complete: true
+          }
+        }
+      )
+      .then(response => {
+        this.reloadAllItems()
+      })
+  }
+  // Figure out the id of the item the user is completing
+  // Tell the api that ID=???? is changing to complete
+  // reload all the items
+
+  deleteItem = event => {
+    axios
+      .delete(
+        `https://one-list-api.herokuapp.com/items/${
+          event.target.dataset.id
+        }?access_token=fingerlicknfilms`,
+        {
+          item: ''
+        }
+      )
+      .then(response => {
+        this.reloadAllItems()
+      })
   }
 
   newItem = event => {
@@ -80,9 +109,11 @@ class App extends Component {
               const todoClass = todo.complete ? 'completed' : ''
               return (
                 <li
-                  onClick={this.setState.complete}
+                  onClick={this.complete}
+                  onDoubleClick={this.deleteItem}
                   key={index}
                   className={todoClass}
+                  data-id={todo.id}
                 >
                   {todo.text}
                 </li>
