@@ -40,6 +40,10 @@ class App extends Component {
   // }
 
   complete = event => {
+    // Figure out the id of the item the user is completing
+    // Tell the api that ID=???? is changing to complete
+    // reload all the items
+
     axios
       .put(
         `https://one-list-api.herokuapp.com/items/${
@@ -55,9 +59,6 @@ class App extends Component {
         this.reloadAllItems()
       })
   }
-  // Figure out the id of the item the user is completing
-  // Tell the api that ID=???? is changing to complete
-  // reload all the items
 
   deleteItem = event => {
     axios
